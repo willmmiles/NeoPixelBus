@@ -70,7 +70,7 @@ public:
     const static uint32_t Period = (F_CPU / 800000 - CYCLES_LOOPTEST); // 1.25us per bit
 
     static const uint32_t ResetTimeUs = 300;
-    const static uint32_t TLatch = (F_CPU / 22222 - CYCLES_LOOPTEST); // 45us, be generous
+    const static uint32_t TLatch = (F_CPU / 45000 - CYCLES_LOOPTEST); // 45us, be generous
 };
 
 class NeoEspBitBangSpeedWs2812x 
@@ -81,7 +81,7 @@ public:
     const static uint32_t Period = (F_CPU / 800000 - CYCLES_LOOPTEST); // 1.25us per bit
 
     static const uint32_t ResetTimeUs = 300;
-    const static uint32_t TLatch = (F_CPU / 22222 - CYCLES_LOOPTEST); // 45us, be generous
+    const static uint32_t TLatch = (F_CPU / 35000 - CYCLES_LOOPTEST); // 45us, be generous
 };
 
 class NeoEspBitBangSpeedWs2805
@@ -238,7 +238,7 @@ public:
             // rather than stalling for the latch.
             while (!IsReadyToUpdate())
             {
-                yield(); // allows for system yield if needed
+                delay(1); // allows for system yield if needed
             }
 
             done = neoEspBitBangWriteSpacingPixels(_data,
@@ -253,6 +253,7 @@ public:
 
             // save EOD time for latch on next call
             _endTime = micros();
+            //if (!done) delay(1000); // pause for visibility
         }
     }
 
